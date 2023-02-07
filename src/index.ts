@@ -16,7 +16,7 @@ if (process.argv.at(-1) === '--NODE_ENV=development') {
  
  
 
-let PORT:number = Number(process.env.PORT) || 8000;
+let PORT:number = Number(process.env.PORT) || 3000;
 
 
 const AppCallback = ():void =>{

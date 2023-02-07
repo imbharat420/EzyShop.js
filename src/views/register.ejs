@@ -10,31 +10,50 @@
                         <h1 class="title">Sign Up</h1>
                         <p>Signup is simply dummy text of the printing and typesetting industry.</p>
                     </div>
-                    <form action="" class="default-form-wrapper">
+
+                       <% if(typeof(errors) != 'undefined') { %> <% errors.forEach((error) => { %>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <%= error.msg %>
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="alert"
+                                    aria-label="Close"
+                                ></button>
+                            </div>
+                        <%})%> <%}%>
+
+                    <form action="/register" method="POST" enctype="multipart/form-data" class="default-form-wrapper">
                         <ul class="default-form-list">
                             <li class="single-form-item">
                                 <label for="name" class="visually-hidden">Name</label>
-                                <input type="text" id="name" placeholder="username" value="demo">
+                                <input type="text" id="name" name="name" placeholder="username"  <% if(typeof data != "undefined" && data.name) {%> value="<%= data.name %>" <% } %> />
                                 <span class="icon"><i class="icon icon-carce-user"></i></span>
                             </li>
                             <li class="single-form-item">
                                 <label for="email" class="visually-hidden">Email</label>
-                                <input type="email" id="email" placeholder="email" value="demo@gmail.com">
+                                <input type="email" id="email" name="email" placeholder="email" <% if(typeof data != "undefined" && data.email) {%> value="<%= data.email %>" <% } %> >
                                 <span class="icon"><i class="icon icon-carce-mail"></i></span>
                             </li>
                             <li class="single-form-item">
                                 <label for="password" class="visually-hidden">Password</label>
-                                <input type="password" id="password" placeholder="password" value="test1234">
+                                <input type="password" id="password" name="password" placeholder="password" <% if(typeof data != "undefined" && data.password) {%> value="<%= data.password %>" <% } %> >
                                 <span class="icon"><i class="icon icon-carce-eye"></i></span>
                             </li>
                             <li class="single-form-item">
                                 <label for="con-password" class="visually-hidden">Confirm Password</label>
-                                <input type="password" id="con-password" placeholder="Confirm Password" value="test1234">
+                                <input type="password" id="con-password" name="con-password" placeholder="Confirm Password" <% if(typeof data != "undefined" && data["con-password"]) {%> value="<%= data["con-password"] %>" <% } %>>
+                                <span class="icon"><i class="icon icon-carce-eye"></i></span>
+                            </li>
+
+                             <li class="single-form-item">
+                                <label for="file" class="visually-hidden">Avatar</label>
+                                <input type="file" id="file" name="file" placeholder="file" <% if(typeof data != "undefined" && data.file) {%> value="<%= data.file %>" <% } %>>
                                 <span class="icon"><i class="icon icon-carce-eye"></i></span>
                             </li>
                         </ul>
+                        <button type="submit" class="btn btn--block btn--radius btn--size-xlarge btn--color-white btn--bg-maya-blue text-center register-space-top">Sign Up</button>
                     </form>
-                    <a href="login" class="btn btn--block btn--radius btn--size-xlarge btn--color-white btn--bg-maya-blue text-center register-space-top">Sign Up</a>
                 </div>
 
                 <div class="sign-account-text text-center">Already have an account? <a href="login" class="btn--color-radical-red">Sign Up</a></div>
@@ -48,3 +67,26 @@
         <!-- ...:::End User Event Section:::... -->
 
     </main>
+    <script defer>
+        // const form = document.querySelector('.default-form-wrapper');
+        // form.addEventListener("submit",async (e)=>{
+        //     e.preventDefault();
+        //     let formData =  new FormData();
+        //     formData.append('file',document.querySelector('#file').files[0]);
+        //     formData.append('name',document.querySelector('#name').value);
+        //     formData.append('email',document.querySelector('#email').value);
+        //     formData.append('password',document.querySelector('#password').value);
+        //     formData.append('con-password',document.querySelector('#con-password').value);
+
+        //     // let data = formData.entries();
+        //      try{
+        //         let res = await fetch('/api/register',{
+        //             method:'POST',
+        //             body:formData
+        //         })
+        //         console.log(res)
+        //     }catch(err){
+        //         errors.push(err);
+        //     }
+        // })
+    </script> 

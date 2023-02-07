@@ -4,4 +4,8 @@ const ContactUsPage = (req:Request, res:Response) => {
   res.render('contact-us');
 };
 
-export { ContactUsPage };
+const ContactUsPost = (req:Request, res:Response) => {
+  res.render('contact-us');
+};
+
+export { ContactUsPage,ContactUsPost };

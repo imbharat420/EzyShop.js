@@ -10,7 +10,7 @@
                         <h1 class="title">Welcome Back</h1>
                         <p>Login with your account to continue.</p>
                     </div>
-                    <form action="" class="default-form-wrapper">
+                    <form action="/api/login" class="default-form-wrapper">
                         <ul class="default-form-list">
                             <li class="single-form-item">
                                 <label for="name" class="visually-hidden">Name</label>
@@ -26,7 +26,7 @@
                     </form>
                     <a href="register" class="forgot-link">Forgot Password?</a>
 
-                    <a href="index" class="btn btn--block btn--radius btn--size-xlarge btn--color-white btn--bg-maya-blue text-center">LogIn</a>
+                    <a href="/" class="btn btn--block btn--radius btn--size-xlarge btn--color-white btn--bg-maya-blue text-center">LogIn</a>
                     <span class="devide-text">or</span>
                     <a href="https://www.facebook.com/login/" class="btn btn--social-large btn--block btn--radius btn--size-xlarge btn--color-white btn--bg-dodger-blue"><span class="icon"><i class="icon icon-carce-facebook"></i></span>Continue with Facebook</a>
                     <a href="https://myaccount.google.com/" class="btn btn--social-large btn--block btn--radius btn--size-xlarge btn--color-white btn--bg-red-orange"><span class="icon"><i class="icon icon-carce-google"></i></span>Continue with Google</a>
@@ -43,3 +43,22 @@
 
     </main>
 
+
+
+    <script defer>
+        // const form = document.querySelector('.default-form-wrapper');
+        // form.addEventListener("submit",(e)=>{
+        //     e.preventDefault();
+
+        //     const formData = new FormData(form);
+        //     const data = Object.fromEntries(formData.entries());
+        //     console.log(data);
+        //     fetch('/login',{
+        //         method: 'POST',
+        //         headers: {
+        //             ...form.enctype,
+        //         },
+        //         body: JSON.stringify({...data})
+        //     })
+        // })
+    </script>
