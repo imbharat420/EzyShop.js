@@ -10,23 +10,37 @@
                         <h1 class="title">Welcome Back</h1>
                         <p>Login with your account to continue.</p>
                     </div>
-                    <form action="/api/login" class="default-form-wrapper">
+
+                      <% if(typeof(errors) != 'undefined') { %> <% errors.forEach((error) => { %>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <%= error.msg %>
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="alert"
+                                    aria-label="Close"
+                                ></button>
+                            </div>
+                        <%})%> <%}%>
+
+                        
+                    <form action="/login" method="POST" class="default-form-wrapper">
                         <ul class="default-form-list">
                             <li class="single-form-item">
                                 <label for="name" class="visually-hidden">Name</label>
-                                <input type="text" id="name" placeholder="username" value="demo@gmail.com">
+                                <input type="text" id="name" name="username" placeholder="username" <% if(typeof data != "undefined" && data.username) {%> value="<%= data.username %>" <% } %>>
                                 <span class="icon"><i class="icon icon-carce-user"></i></span>
                             </li>
                             <li class="single-form-item">
                                 <label for="password" class="visually-hidden">Password</label>
-                                <input type="password" id="password" placeholder="password" value="test1234">
+                                <input type="password" id="password" name="password" placeholder="password" <% if(typeof data != "undefined" && data.password) {%> value="<%= data.password %>" <% } %>>
                                 <span class="icon"><i class="icon icon-carce-eye"></i></span>
                             </li>
                         </ul>
+                        <a href="register" class="forgot-link">Forgot Password?</a>
+                        
+                        <button type="submit" class="btn btn--block btn--radius btn--size-xlarge btn--color-white btn--bg-maya-blue text-center">LogIn</button>
                     </form>
-                    <a href="register" class="forgot-link">Forgot Password?</a>
-
-                    <a href="/" class="btn btn--block btn--radius btn--size-xlarge btn--color-white btn--bg-maya-blue text-center">LogIn</a>
                     <span class="devide-text">or</span>
                     <a href="https://www.facebook.com/login/" class="btn btn--social-large btn--block btn--radius btn--size-xlarge btn--color-white btn--bg-dodger-blue"><span class="icon"><i class="icon icon-carce-facebook"></i></span>Continue with Facebook</a>
                     <a href="https://myaccount.google.com/" class="btn btn--social-large btn--block btn--radius btn--size-xlarge btn--color-white btn--bg-red-orange"><span class="icon"><i class="icon icon-carce-google"></i></span>Continue with Google</a>

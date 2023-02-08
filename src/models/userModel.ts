@@ -11,11 +11,12 @@ let avatar = {
 
 
 
-const userSchema:Schema = new Schema(
+const userSchema:Schema = new Schema<IUser>(
   {
-    name: {
+    username: {
       type: String,
       required: true,
+      unique: true,
     },
     avatar: {
         type: String,
@@ -59,9 +60,7 @@ userSchema.set('toJSON', {
   },
 });
 
-userSchema.methods.matchPassword = async function (enteredPassword: string) {
-  return await bcrypt.compare(enteredPassword, this.password)
-}
+
 
 userSchema.pre('save', async function (next) {
   if (this.isModified('password') || this.isNew) {
@@ -79,12 +78,24 @@ userSchema.pre('save', async function (next) {
 })
 
 
-userSchema.methods.checkPassword = async function (password: string) {
+userSchema.methods.checkPassword = async function (password: string):Promise<boolean>{
+  let pass = this.password;
   if (!password) {
     return false;
   }
-  return bcrypt.compare(password, this.password);
+  return new Promise((resolve, reject) => {
+        bcrypt.compare(password, pass, (err, success) => {
+            if (err) return reject(err);
+            return resolve(success);
+        });
+  });
 };
+
+// userSchema.methods.matchPassword = async function (enteredPassword: string) {
+//   return await bcrypt.compare(enteredPassword, this.password)
+// }
+
+
 
 
 // set TTL
@@ -100,6 +111,22 @@ userSchema.index(
 );
 
 
+
 const User = mongoose.model<IUser>('User', userSchema)
 
 export default User
+
+
+
+/*
+//Custom Error Messages
+var options = {
+    errorMessages: {
+        UserExistsError: 'Email already exists',
+        IncorrectUsernameError: 'Email does not exist',
+        IncorrectPasswordError: ...
+    }
+};
+
+Account.plugin(passportLocalMongoose, options);
+*/

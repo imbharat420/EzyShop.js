@@ -1,6 +1,6 @@
 
     <main class="main-wrapper">
-
+ 
         <!-- ...:::Start Login Section:::... -->
         <div class="login-section mt-115">
             <div class="container">
@@ -26,8 +26,8 @@
                     <form action="/register" method="POST" enctype="multipart/form-data" class="default-form-wrapper">
                         <ul class="default-form-list">
                             <li class="single-form-item">
-                                <label for="name" class="visually-hidden">Name</label>
-                                <input type="text" id="name" name="name" placeholder="username"  <% if(typeof data != "undefined" && data.name) {%> value="<%= data.name %>" <% } %> />
+                                <label for="username" class="visually-hidden">Username</label>
+                                <input type="text" id="username" name="username" placeholder="username"  <% if(typeof data != "undefined" && data.username) {%> value="<%= data.username %>" <% } %> />
                                 <span class="icon"><i class="icon icon-carce-user"></i></span>
                             </li>
                             <li class="single-form-item">

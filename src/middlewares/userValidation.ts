@@ -1,9 +1,9 @@
 import { NextFunction, Request,Response } from "express";
-import { check,body, validationResult } from 'express-validator/check'
+import { check,body,oneOf ,validationResult } from 'express-validator/check'
 
 
 const registerPostValidtor = [
-   check('name')
+   check('username')
     .trim()
     .escape()
     .not()
@@ -24,8 +24,8 @@ const registerPostValidtor = [
     .trim()
     .not()
     .isEmpty()
-    .isLength({min: 8})
-    .withMessage('Password must be 8 length')
+    .isLength({min: 3})
+    .withMessage('Password must be 3 length')
     .bail(),
   body('con-password')
         .exists({checkFalsy: true}).withMessage('You must type a confirmation password')
@@ -48,7 +48,7 @@ const registerPostValidtor = [
         res.render('register', {
             errors: errors.array(),
             data:{
-             name:req.body.name,
+             username:req.body.username,
              email:req.body.email,
              password:req.body.password,
              "con-password":req.body["con-password"],
@@ -60,23 +60,58 @@ const registerPostValidtor = [
 
     console.log("Calling Next")
     next()
-
-    // try{
-    //   validationResult(req).throw();
-    //   res.locals.user = true
-    //   next();
-    // }catch(err:any){
-    //   console.log("NO ERROR BY VALIDATOR",err.mapped());
-    //   res.locals.user = false
-    //   res.render("register",{errors: err.array()})
-    //   return;
-    // }
-
   },
 ];
 
 
-export  {registerPostValidtor};
+const LoginPostValidtor = [
+  oneOf([
+    check('username')
+      .trim()
+      .normalizeEmail()
+      .not()
+      .isEmpty()
+      .withMessage('Invalid Username!')
+      .bail(), 
+    check('username')
+    .trim()
+    .normalizeEmail()
+    .not()
+    .isEmpty()
+    .withMessage('Email is not proper!')
+    .bail(), 
+  ]),
+  check('password')
+    .trim() 
+    .not()
+    .isEmpty()
+    .isLength({min: 3})
+    .withMessage('Password must be 3 length')
+    .bail(),
+  (req:Request, res:Response, next:NextFunction) => {
+
+    const errors = validationResult(req); // this is returning Result object, not array
+
+    if (!errors.isEmpty()) {
+       console.log("Calling login",errors.array())
+        res.render('login', {
+            errors: errors.array(),
+            data:{
+             username:req.body.username,
+             password:req.body.password
+            }
+        });
+        return;
+    }
+
+    console.log("Calling Next")
+    next()
+  },
+];
+
+
+
+export  {registerPostValidtor,LoginPostValidtor};
 
 
 

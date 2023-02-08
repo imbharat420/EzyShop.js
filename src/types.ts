@@ -1,10 +1,10 @@
 
 export interface IUser extends Document {
-    name: string
-    avatar: string
+    username: string
     email: string
+    avatar: string
     password: string
     isAdmin: boolean
     gender: "Male" | "Female"
-    matchPassword?: (enteredPassword: string) => Promise<boolean>
+    checkPassword(password: string): Promise<boolean>
 }

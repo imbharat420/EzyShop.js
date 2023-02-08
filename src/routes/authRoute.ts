@@ -1,14 +1,11 @@
 import { Router } from 'express';
-import { LoginPage, RegisterPage } from '../controllers/user/authController';
+import { LoginPage, LoginPost, RegisterPage, RegisterPost } from '../controllers/user/authController';
 import fileUpload from '../utils/fileUpload';
 const router = Router();
 
-router.get('/login', LoginPage);
-router.get('/register', RegisterPage);
+router.get(['/login','/signin'], LoginPage).post('/login', RegisterPost);
+router.get(['/register','/signup'], RegisterPage).post('/register', LoginPost);
 
-// POST
-router.post('/login', LoginPage);
-router.post('/register', RegisterPage);
 
 
 // router.post('/', fileUpload.single('file'), UserCreate);
