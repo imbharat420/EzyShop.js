@@ -43,6 +43,8 @@ import passport from "passport"
 import passportConfig from './config/passportConfig'; 
 
 
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -55,18 +57,15 @@ app.use(function(req, res, next) {
 });
 
 passportConfig(passport);
-
-
 app.use(methodOverride("_method"));
-
-
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 
 
-// Template Engine
+/**
+ * Template Engine and Static Files
+*/
 import expressLayouts from 'express-ejs-layouts';
 import extendLayout from 'express-ejs-extend';
 
@@ -80,9 +79,14 @@ app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 
 
+/**
+ * ROUTES
+ */
 import Routes from './routes';
-
 Routes(app);
+
+
+
 
 
 
