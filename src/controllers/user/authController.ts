@@ -89,10 +89,9 @@ const LoginPost = async (req:Request, res:Response) => {
 const LogoutHandler = (req:Request, res:Response) => { 
   req.logout(err => {
         if (err)  req.flash('success', err);
-        // res.status(http.statusCodes.NO_CONTENT).end()
         res.locals.currentUser = null
         req.flash('success', 'You are logged out!');
-        return res.redirect('/welcome');
+        return res.redirect('/');
     })
   
 }

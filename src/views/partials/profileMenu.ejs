@@ -1,4 +1,6 @@
-        <!--  Start Offcanvas Profile Menu Section -->
+  
+ <% if (typeof currentUser != "undefined" && currentUser) { %>
+  <!--  Start Offcanvas Profile Menu Section -->
         <div id="profile-menu-offcanvas" class="offcanvas offcanvas-rightside">
             <!-- Start Offcanvas Header -->
             <div class="offcanvas-header flex-start offcanvas-modify">
@@ -67,7 +69,7 @@
                                 <li class="profile-list-item">
                                     <ul class="profile-single-list">
                                         <li class="list-item">
-                                            <a href="login" class="profile-link"><span class="icon"><i
+                                            <a href="/logout" class="profile-link"><span class="icon"><i
                                                 class="icon icon-carce-login"></i></span>Log Out</a>
                                         </li>
                                     </ul>
@@ -81,3 +83,4 @@
         </div> <!-- ...:::: End Offcanvas Profile Menu Section:::... -->
 
         <div class="offcanvas-overlay"></div>
+    <% } %>
