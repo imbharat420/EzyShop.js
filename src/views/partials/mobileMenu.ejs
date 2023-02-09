@@ -41,8 +41,12 @@
                                     <li><a href="cart">Cart</a></li>
                                     <li><a href="wishlist">Wishlist</a></li>
                                     <li><a href="order">Order</a></li>
-                                    <li><a href="login">Login</a></li>
-                                    <li><a href="register">Register</a></li>
+                                    <% if (typeof currentUser != "undefined" && currentUser) { %>
+                                        <li><a href="logout">Logout</a></li>
+                                    <% } else { %>
+                                        <li><a href="login">Login</a></li>
+                                        <li><a href="register">Register</a></li>
+                                    <% } %>
                                 </ul>
                             </li>
                         </ul>

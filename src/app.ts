@@ -1,8 +1,10 @@
-import express from 'express';
+import express,{Request,Response,NextFunction} from 'express';
 import { fileURLToPath } from 'url';
 import flash from 'connect-flash' 
 import fs from 'fs'; 
 import path from 'path';
+import createHttpError from "http-errors"
+
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
 
@@ -29,9 +31,12 @@ app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true },
+  cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24  },
   store: connectMongo.create({ mongoUrl: process.env.MONGO_URI })
 }))
+
+app.set('trust proxy', 1) // trust first proxy
+
 app.use(flash());
 
 import passport from "passport"
@@ -40,7 +45,7 @@ import passportConfig from './config/passportConfig';
 
 app.use(passport.initialize());
 app.use(passport.session());
-passportConfig(passport);
+
 
 app.use(function(req, res, next) {
   res.locals.currentUser = req.user;
@@ -48,6 +53,9 @@ app.use(function(req, res, next) {
   res.locals.success = req.flash("success");
   next();
 });
+
+passportConfig(passport);
+
 
 app.use(methodOverride("_method"));
 
@@ -108,13 +116,13 @@ import { registerPostValidtor,LoginPostValidtor } from './middlewares/UserValida
 
 //Validation
  import {ensureLoggedOut, ensureLoggedIn} from 'connect-ensure-login';
-import { NextFunction } from 'express-serve-static-core';
+
 
 
 // User
 app.get('/', userRoute);
-app.get('/login',ensureLoggedIn('/'), LoginPage);
-app.get('/register',ensureLoggedIn('/'), RegisterPage);
+app.get('/login',ensureLoggedOut('/'), LoginPage);
+app.get('/register',ensureLoggedOut('/'), RegisterPage);
 app.get('/chat', ChatPage);
 app.get('/welcome', WelcomePage);
 app.get('/profile-settings',ensureLoggedOut("/login"), ProfileSettingsPage);
@@ -141,6 +149,23 @@ app.get('/single-product', SingleProductPage);
 app.get('/shop-category', ShopCategoryPage);
  
  
+
+
+
+// 404 Handler
+app.use((req:Request, res:Response, next:NextFunction) => {
+  next(createHttpError.NotFound());
+});
+
+// Error Handler
+app.use((error:any, req:Request, res:Response, next:NextFunction) => {
+  error.status = error.status || 500;
+  res.status(error.status);
+  res.render('error_40x', { error });
+});
+
+
+
 
 
 app.get('*', (req, res) => {

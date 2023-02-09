@@ -6,12 +6,10 @@ function passportConfig(passport: any) {
     passport.use(
         new passportLocal.Strategy(async (username: string, password: string, done: any) => {
             try{
-                let user = await User.find(getFindUserQuery(username)); 
-                if(!user.length) return done(null, false, {errors:[{msg:'User not found'}]})
-                if (!user || !(await user[0].checkPassword(password))) return done(null, false, {message: 'Password is incorrect'})
-
-                return done(null, user[0])
-                
+                let user = await User.findOne(getFindUserQuery(username)); 
+                if(!user) return done(null, false, {errors:[{msg:'User not found'}]})
+                if (!user || !(await user.checkPassword(password))) return done(null, false, {message: 'Password is incorrect'})
+                return done(null, user)                
             }catch(err){
                 return done(err, false)
             }
